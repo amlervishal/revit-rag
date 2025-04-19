@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Revit RAG Agent</Name>
+    <Assembly>RevitRagAgent.dll</Assembly>
+    <FullClassName>RevitRagAgent.RevitRagApp</FullClassName>
+    <ClientId>4A8BF6F8-C1CD-4DB7-950E-C2C5DF9AFAC8</ClientId>
+    <VendorId>YourCompany</VendorId>
+    <VendorDescription>Your Company Description</VendorDescription>
+  </AddIn>
+</RevitAddIns>
