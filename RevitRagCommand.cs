@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using WinForms = System.Windows.Forms;
+using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -29,16 +30,16 @@ namespace RevitRagAgent
         }
     }
 
-    public class RevitRagForm : Form
+    public class RevitRagForm : WinForms.Form
     {
         private UIApplication _uiApp;
-        private TextBox _questionTextBox;
-        private Button _askButton;
-        private Button _scriptButton;
-        private Button _settingsButton;
-        private RichTextBox _answerTextBox;
-        private Label _statusLabel;
-        private ComboBox _contextSelector;
+        private WinForms.TextBox _questionTextBox;
+        private WinForms.Button _askButton;
+        private WinForms.Button _scriptButton;
+        private WinForms.Button _settingsButton;
+        private WinForms.RichTextBox _answerTextBox;
+        private WinForms.Label _statusLabel;
+        private WinForms.ComboBox _contextSelector;
         private Settings _settings;
         private DocumentEmbeddings _documentEmbeddings;
         private RagProcessor _ragProcessor;
@@ -69,7 +70,7 @@ namespace RevitRagAgent
             this.Height = 500;
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            Label headerLabel = new Label
+            Label headerLabel = new WinForms.Label
             {
                 Text = "Revit RAG Agent",
                 Dock = DockStyle.Top,
@@ -78,21 +79,21 @@ namespace RevitRagAgent
                 Height = 30
             };
 
-            Label contextLabel = new Label
+            Label contextLabel = new WinForms.Label
             {
                 Text = "Select Context:",
                 Location = new System.Drawing.Point(10, 40),
                 Width = 100
             };
 
-            _contextSelector = new ComboBox
+            _contextSelector = new WinForms.ComboBox
             {
                 Location = new System.Drawing.Point(110, 40),
                 Width = 400,
-                DropDownStyle = ComboBoxStyle.DropDownList
+                DropDownStyle = WinForms.ComboBoxStyle.DropDownList
             };
             
-            _settingsButton = new Button
+            _settingsButton = new WinForms.Button
             {
                 Text = "Settings",
                 Location = new System.Drawing.Point(520, 40),
@@ -101,14 +102,14 @@ namespace RevitRagAgent
             };
             _settingsButton.Click += SettingsButton_Click;
 
-            Label questionLabel = new Label
+            Label questionLabel = new WinForms.Label
             {
                 Text = "Ask a question:",
                 Location = new System.Drawing.Point(10, 70),
                 Width = 100
             };
 
-            _questionTextBox = new TextBox
+            _questionTextBox = new WinForms.TextBox
             {
                 Location = new System.Drawing.Point(10, 90),
                 Width = 570,
@@ -116,7 +117,7 @@ namespace RevitRagAgent
                 Multiline = true
             };
 
-            _askButton = new Button
+            _askButton = new WinForms.Button
             {
                 Text = "Ask",
                 Location = new System.Drawing.Point(10, 160),
@@ -125,7 +126,7 @@ namespace RevitRagAgent
             };
             _askButton.Click += AskButton_Click;
             
-            _scriptButton = new Button
+            _scriptButton = new WinForms.Button
             {
                 Text = "Generate Script",
                 Location = new System.Drawing.Point(100, 160),
@@ -134,21 +135,21 @@ namespace RevitRagAgent
             };
             _scriptButton.Click += ScriptButton_Click;
 
-            _statusLabel = new Label
+            _statusLabel = new WinForms.Label
             {
                 Text = "",
                 Location = new System.Drawing.Point(210, 165),
                 Width = 370
             };
 
-            Label answerLabel = new Label
+            Label answerLabel = new WinForms.Label
             {
                 Text = "Answer:",
                 Location = new System.Drawing.Point(10, 200),
                 Width = 100
             };
 
-            _answerTextBox = new RichTextBox
+            _answerTextBox = new WinForms.RichTextBox
             {
                 Location = new System.Drawing.Point(10, 220),
                 Width = 570,
@@ -189,7 +190,7 @@ namespace RevitRagAgent
             string question = _questionTextBox.Text.Trim();
             if (string.IsNullOrEmpty(question))
             {
-                MessageBox.Show("Please enter a question.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                WinForms.MessageBox.Show("Please enter a question.", "Input Required", WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Information);
                 return;
             }
 
@@ -221,17 +222,17 @@ namespace RevitRagAgent
             string question = _questionTextBox.Text.Trim();
             if (string.IsNullOrEmpty(question))
             {
-                MessageBox.Show("Please enter a task or operation description.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                WinForms.MessageBox.Show("Please enter a task or operation description.", "Input Required", WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Information);
                 return;
             }
 
-            DialogResult confirmResult = MessageBox.Show(
+            WinForms.DialogResult confirmResult = WinForms.MessageBox.Show(
                 "This will generate and potentially execute code in your Revit model. Continue?",
                 "Confirm Script Execution",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
+                WinForms.MessageBoxButtons.YesNo,
+                WinForms.MessageBoxIcon.Warning);
 
-            if (confirmResult != DialogResult.Yes)
+            if (confirmResult != WinForms.DialogResult.Yes)
             {
                 return;
             }
@@ -254,13 +255,13 @@ namespace RevitRagAgent
                 _answerTextBox.Text = response;
                 
                 // Extract and execute the code
-                DialogResult executeResult = MessageBox.Show(
+                WinForms.DialogResult executeResult = WinForms.MessageBox.Show(
                     "Review the generated script. Would you like to execute it?",
                     "Execute Script",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+                    WinForms.MessageBoxButtons.YesNo,
+                    WinForms.MessageBoxIcon.Question);
                 
-                if (executeResult == DialogResult.Yes)
+                if (executeResult == WinForms.DialogResult.Yes)
                 {
                     _statusLabel.Text = "Executing script...";
                     string executionResult = _scriptExecutor.ExecuteScriptFromResponse(response);

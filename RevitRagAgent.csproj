@@ -66,6 +66,7 @@
     <Compile Include="RevitScriptExecutor.cs" />
     <Compile Include="SettingsForm.cs" />
     <Compile Include="SettingsManager.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

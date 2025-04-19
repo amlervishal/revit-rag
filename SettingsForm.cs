@@ -1,22 +1,22 @@
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using WinForms = System.Windows.Forms;
 
 namespace RevitRagAgent
 {
-    public class SettingsForm : Form
+    public class SettingsForm : WinForms.Form
     {
         private Settings _settings;
-        private TextBox _apiKeyTextBox;
-        private ComboBox _providerComboBox;
-        private ComboBox _modelNameComboBox;
-        private NumericUpDown _maxTokensNumeric;
-        private TrackBar _temperatureTrackBar;
-        private Label _temperatureValueLabel;
-        private TextBox _embeddingsPathTextBox;
-        private Button _browseButton;
-        private Button _saveButton;
-        private Button _cancelButton;
+        private WinForms.TextBox _apiKeyTextBox;
+        private WinForms.ComboBox _providerComboBox;
+        private WinForms.ComboBox _modelNameComboBox;
+        private WinForms.NumericUpDown _maxTokensNumeric;
+        private WinForms.TrackBar _temperatureTrackBar;
+        private WinForms.Label _temperatureValueLabel;
+        private WinForms.TextBox _embeddingsPathTextBox;
+        private WinForms.Button _browseButton;
+        private WinForms.Button _saveButton;
+        private WinForms.Button _cancelButton;
         
         public SettingsForm(Settings settings)
         {
@@ -30,8 +30,8 @@ namespace RevitRagAgent
             this.Text = "Revit RAG Agent Settings";
             this.Width = 500;
             this.Height = 400;
-            this.StartPosition = FormStartPosition.CenterParent;
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = WinForms.FormStartPosition.CenterParent;
+            this.FormBorderStyle = WinForms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             
@@ -41,14 +41,14 @@ namespace RevitRagAgent
             int currentY = 20;
             
             // API Key
-            Label apiKeyLabel = new Label
+            WinForms.Label apiKeyLabel = new WinForms.Label
             {
                 Text = "API Key:",
                 Location = new System.Drawing.Point(20, currentY + 5),
                 Width = labelWidth
             };
             
-            _apiKeyTextBox = new TextBox
+            _apiKeyTextBox = new WinForms.TextBox
             {
                 Location = new System.Drawing.Point(150, currentY),
                 Width = controlWidth,
@@ -58,18 +58,18 @@ namespace RevitRagAgent
             currentY += rowHeight;
             
             // Provider
-            Label providerLabel = new Label
+            WinForms.Label providerLabel = new WinForms.Label
             {
                 Text = "LLM Provider:",
                 Location = new System.Drawing.Point(20, currentY + 5),
                 Width = labelWidth
             };
             
-            _providerComboBox = new ComboBox
+            _providerComboBox = new WinForms.ComboBox
             {
                 Location = new System.Drawing.Point(150, currentY),
                 Width = controlWidth,
-                DropDownStyle = ComboBoxStyle.DropDownList
+                DropDownStyle = WinForms.ComboBoxStyle.DropDownList
             };
             _providerComboBox.SelectedIndexChanged += ProviderComboBox_SelectedIndexChanged;
             
@@ -260,7 +260,7 @@ namespace RevitRagAgent
         
         private void BrowseButton_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog
+            WinForms.SaveFileDialog dialog = new WinForms.SaveFileDialog
             {
                 Title = "Select Embeddings File Location",
                 Filter = "JSON Files (*.json)|*.json",
@@ -268,7 +268,7 @@ namespace RevitRagAgent
                 InitialDirectory = System.IO.Path.GetDirectoryName(_settings.EmbeddingsPath)
             };
             
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog() == WinForms.DialogResult.OK)
             {
                 _embeddingsPathTextBox.Text = dialog.FileName;
             }
@@ -279,28 +279,28 @@ namespace RevitRagAgent
             // Validate settings
             if (string.IsNullOrWhiteSpace(_apiKeyTextBox.Text))
             {
-                MessageBox.Show("API Key cannot be empty.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WinForms.MessageBox.Show("API Key cannot be empty.", "Validation Error", WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Error);
                 _apiKeyTextBox.Focus();
                 return;
             }
             
             if (_providerComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Please select an LLM provider.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WinForms.MessageBox.Show("Please select an LLM provider.", "Validation Error", WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Error);
                 _providerComboBox.Focus();
                 return;
             }
             
             if (_modelNameComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Please select a model.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WinForms.MessageBox.Show("Please select a model.", "Validation Error", WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Error);
                 _modelNameComboBox.Focus();
                 return;
             }
             
             if (string.IsNullOrWhiteSpace(_embeddingsPathTextBox.Text))
             {
-                MessageBox.Show("Embeddings path cannot be empty.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                WinForms.MessageBox.Show("Embeddings path cannot be empty.", "Validation Error", WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Error);
                 _embeddingsPathTextBox.Focus();
                 return;
             }
@@ -316,7 +316,7 @@ namespace RevitRagAgent
             // Save settings
             SettingsManager.SaveSettings(_settings);
             
-            this.DialogResult = DialogResult.OK;
+            this.DialogResult = WinForms.DialogResult.OK;
             this.Close();
         }
     }

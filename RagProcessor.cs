@@ -304,7 +304,7 @@ namespace RevitRagAgent
                         if (!generatedContent.Contains("Sources:") && relevantChunks.Count > 0)
                         {
                             generatedContent += "\n\nSources:\n";
-                            foreach (var chunk in relevantChunks.DistinctBy(c => c.Source))
+                            foreach (var chunk in LinqExtensions.DistinctBy(relevantChunks, c => c.Source))
                             {
                                 generatedContent += $"- {chunk.Source}\n";
                             }
