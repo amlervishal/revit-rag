@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using WinForms = System.Windows.Forms;
+using System.Windows.Forms;
 using System.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -30,16 +30,16 @@ namespace RevitRagAgent
         }
     }
 
-    public class RevitRagForm : WinForms.Form
+    public class RevitRagForm : System.Windows.Forms.Form
     {
         private UIApplication _uiApp;
-        private WinForms.TextBox _questionTextBox;
-        private WinForms.Button _askButton;
-        private WinForms.Button _scriptButton;
-        private WinForms.Button _settingsButton;
-        private WinForms.RichTextBox _answerTextBox;
-        private WinForms.Label _statusLabel;
-        private WinForms.ComboBox _contextSelector;
+        private System.Windows.Forms.TextBox _questionTextBox;
+        private System.Windows.Forms.Button _askButton;
+        private System.Windows.Forms.Button _scriptButton;
+        private System.Windows.Forms.Button _settingsButton;
+        private System.Windows.Forms.RichTextBox _answerTextBox;
+        private System.Windows.Forms.Label _statusLabel;
+        private System.Windows.Forms.ComboBox _contextSelector;
         private Settings _settings;
         private DocumentEmbeddings _documentEmbeddings;
         private RagProcessor _ragProcessor;
@@ -70,7 +70,7 @@ namespace RevitRagAgent
             this.Height = 500;
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            Label headerLabel = new WinForms.Label
+            Label headerLabel = new Label
             {
                 Text = "Revit RAG Agent",
                 Dock = DockStyle.Top,
@@ -190,7 +190,7 @@ namespace RevitRagAgent
             string question = _questionTextBox.Text.Trim();
             if (string.IsNullOrEmpty(question))
             {
-                WinForms.MessageBox.Show("Please enter a question.", "Input Required", WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Information);
+                MessageBox.Show("Please enter a question.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -222,17 +222,17 @@ namespace RevitRagAgent
             string question = _questionTextBox.Text.Trim();
             if (string.IsNullOrEmpty(question))
             {
-                WinForms.MessageBox.Show("Please enter a task or operation description.", "Input Required", WinForms.MessageBoxButtons.OK, WinForms.MessageBoxIcon.Information);
+                MessageBox.Show("Please enter a task or operation description.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            WinForms.DialogResult confirmResult = WinForms.MessageBox.Show(
+            DialogResult confirmResult = MessageBox.Show(
                 "This will generate and potentially execute code in your Revit model. Continue?",
                 "Confirm Script Execution",
-                WinForms.MessageBoxButtons.YesNo,
-                WinForms.MessageBoxIcon.Warning);
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
 
-            if (confirmResult != WinForms.DialogResult.Yes)
+            if (confirmResult != DialogResult.Yes)
             {
                 return;
             }
@@ -255,13 +255,13 @@ namespace RevitRagAgent
                 _answerTextBox.Text = response;
                 
                 // Extract and execute the code
-                WinForms.DialogResult executeResult = WinForms.MessageBox.Show(
+                DialogResult executeResult = MessageBox.Show(
                     "Review the generated script. Would you like to execute it?",
                     "Execute Script",
-                    WinForms.MessageBoxButtons.YesNo,
-                    WinForms.MessageBoxIcon.Question);
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
                 
-                if (executeResult == WinForms.DialogResult.Yes)
+                if (executeResult == DialogResult.Yes)
                 {
                     _statusLabel.Text = "Executing script...";
                     string executionResult = _scriptExecutor.ExecuteScriptFromResponse(response);

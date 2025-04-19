@@ -1,22 +1,22 @@
 using System;
 using System.Collections.Generic;
-using WinForms = System.Windows.Forms;
+using System.Windows.Forms;
 
 namespace RevitRagAgent
 {
-    public class SettingsForm : WinForms.Form
+    public class SettingsForm : Form
     {
         private Settings _settings;
-        private WinForms.TextBox _apiKeyTextBox;
-        private WinForms.ComboBox _providerComboBox;
-        private WinForms.ComboBox _modelNameComboBox;
-        private WinForms.NumericUpDown _maxTokensNumeric;
-        private WinForms.TrackBar _temperatureTrackBar;
-        private WinForms.Label _temperatureValueLabel;
-        private WinForms.TextBox _embeddingsPathTextBox;
-        private WinForms.Button _browseButton;
-        private WinForms.Button _saveButton;
-        private WinForms.Button _cancelButton;
+        private TextBox _apiKeyTextBox;
+        private ComboBox _providerComboBox;
+        private ComboBox _modelNameComboBox;
+        private NumericUpDown _maxTokensNumeric;
+        private TrackBar _temperatureTrackBar;
+        private Label _temperatureValueLabel;
+        private TextBox _embeddingsPathTextBox;
+        private Button _browseButton;
+        private Button _saveButton;
+        private Button _cancelButton;
         
         public SettingsForm(Settings settings)
         {
@@ -30,8 +30,8 @@ namespace RevitRagAgent
             this.Text = "Revit RAG Agent Settings";
             this.Width = 500;
             this.Height = 400;
-            this.StartPosition = WinForms.FormStartPosition.CenterParent;
-            this.FormBorderStyle = WinForms.FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             
@@ -260,7 +260,7 @@ namespace RevitRagAgent
         
         private void BrowseButton_Click(object sender, EventArgs e)
         {
-            WinForms.SaveFileDialog dialog = new WinForms.SaveFileDialog
+            SaveFileDialog dialog = new SaveFileDialog
             {
                 Title = "Select Embeddings File Location",
                 Filter = "JSON Files (*.json)|*.json",
@@ -268,7 +268,7 @@ namespace RevitRagAgent
                 InitialDirectory = System.IO.Path.GetDirectoryName(_settings.EmbeddingsPath)
             };
             
-            if (dialog.ShowDialog() == WinForms.DialogResult.OK)
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 _embeddingsPathTextBox.Text = dialog.FileName;
             }
@@ -316,7 +316,7 @@ namespace RevitRagAgent
             // Save settings
             SettingsManager.SaveSettings(_settings);
             
-            this.DialogResult = WinForms.DialogResult.OK;
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
     }

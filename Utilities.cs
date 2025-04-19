@@ -6,7 +6,7 @@ namespace RevitRagAgent
 {
     public static class LinqExtensions
     {
-        // Implementation of DistinctBy extension method for .NET Framework 4.8
+        // Add the missing DistinctBy extension method
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector)
